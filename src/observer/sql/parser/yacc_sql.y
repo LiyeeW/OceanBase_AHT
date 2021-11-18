@@ -36,7 +36,7 @@ char *substr(const char *s,int n1,int n2)/*从s中提取下标为n1~n2的字符�
 
 void yyerror(yyscan_t scanner, const char *str)
 {
-  ParserContext *context = (ParserContext *)(yyget_extra(scanner));
+  ParserContext *context = CONTEXT;
   query_reset(context->ssql);
   context->ssql->flag = SCF_ERROR;
   context->condition_length = 0;
@@ -152,6 +152,9 @@ command:
 	| load_data
 	| help
 	| exit
+	| error SEMICOLON {
+		yyerror(NULL, "ERROR");
+	}
     ;
 
 exit:			
