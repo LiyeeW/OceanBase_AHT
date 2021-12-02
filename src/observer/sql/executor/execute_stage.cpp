@@ -346,6 +346,7 @@ RC ExecuteStage::do_select(const char *db, Query *sql, SessionEvent *session_eve
     for (int i = selects.attr_num - 1; i >= 0; i--) {
       const RelAttr &attr = selects.attributes[i];
       if (0 == strcmp("*", attr.attribute_name)) {  //default type of count is INTS
+        if (attr.aggregate_type != CNT_AGG) return RC::GENERIC_ERROR;
         tuple_schema.add(INTS, attr.relation_name?attr.relation_name:"*", attr.attribute_name, attr.aggregate_type);
       } 
       else {
