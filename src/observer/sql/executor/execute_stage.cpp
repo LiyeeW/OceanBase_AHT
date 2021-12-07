@@ -496,8 +496,8 @@ RC ExecuteStage::do_select(const char *db, Query *sql, SessionEvent *session_eve
             const std::shared_ptr<TupleValue> b1_value = result_tuple_set->get(bline-1).get_pointer(pos);
             int cmp = b0_value->compare(*b1_value);
             if(cmp == 0) continue;
-            exchange |= selects.order_type[order]==0 && cmp>0;
-            exchange |= selects.order_type[order]==1 && cmp<0;
+            exchange |= selects.order_type[order]==1 && cmp>0;
+            exchange |= selects.order_type[order]==0 && cmp<0;
             break;
           }
           if(exchange){
